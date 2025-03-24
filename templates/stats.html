@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+   
+        <title>Meme galerija</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme kategoriju statistika Latvijā</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #c8f8d8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+        img {
+            width: 50%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #00f715;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #65f88a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Meme statistika Latvijā</h1>
+    <h2>Šeit sektora diagramma ir attelota Latijas meme kategoriju sadalījums<h2>
+    <img src="{{ url_for('static', filename='uploads/meme_pie_chart.png') }}" alt="Meme sektoru diagramma">
+
+    <br>
+    <a href="/">Atpakaļ uz aukšupieladi</a>
+    <a href="/memes">Apskatīt MEME galeriju</a>
+</body>
+</html>
+

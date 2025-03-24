@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>Meme galerija</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #c8f8d8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .meme-card {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 300px;
+        }
+        .meme-card img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .meme-card img:hover {
+            transform: scale(1.05);
+        }
+        .meme-card p {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+        .nav-links {
+            margin-top: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            background-color:  #00f715;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+        .nav-links a:hover {
+            background-color:  #65f88a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Meme galerija</h1>
+
+    <div class="gallery">
+        {% for meme in memes %}
+            <div class="meme-card">
+                <img src="{{ url_for('static', filename='uploads/' + meme.filename) }}" alt="Meme">
+                <p>Augšupielādēts: {{ meme.upload_date }}</p>
+                <p>👍 <span id="likes-{{ meme.id }}">{{ meme.likes }}</span> likes</p>
+                <button onclick="likeMeme({{ meme.id }})">👍 Like</button>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <script>
+        function likeMeme(memeId) {
+            fetch(`/like/${memeId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Atjaunina likes skaitu lapā
+                    document.getElementById(`likes-${memeId}`).innerText = data.likes;
+                } else {
+                    console.error('Error in data:', data);
+                }
+            })
+            .catch(error => console.error('Kļūda:', error));
+        }
+    </script>
+    
+
+    <div class="nav-links">
+        <a href="/">Atpakaļ</a>
+        <a href="/stats">Apskatīt statistiku</a>
+    </div>
+
+    <script>
+        function likeMeme(memeId) {
+            fetch(`/like/${memeId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`likes-${memeId}`).innerText = data.likes;
+                }
+            })
+            .catch(error => console.error('Kļūda:', error));
+        }
+    </script>
+</body>
+</html>
+

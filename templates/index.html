@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <title>Meme galerija</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme augšupielāde</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #c8f8d8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+        .upload-form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            margin-top: 20px;
+        }
+        input[type="file"], input[type="submit"], .upload-btn {
+            margin: 10px 5px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"], .upload-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            display: inline-block;
+        }
+        input[type="submit"]:hover, .upload-btn:hover {
+            background-color: #218838;
+        }
+        .nav-links {
+            margin-top: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            background-color: #00f715;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+        .nav-links a:hover {
+            background-color: #65f88a;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .meme-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            margin: 10px;
+            text-align: center;
+            max-width: 300px;
+        }
+        .meme-card img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Augšupielādē savu MEME</h1> 
+    <h2>Augšupielādē savu meme, lai mēs visi kopīgi varētu pasmieties meme galerijā, kad mums ir slikts garastāvoklis.</h2>
+
+    <form action="/" method="post" enctype="multipart/form-data" class="upload-form">
+        {{ form.hidden_tag() }}
+        {{ form.meme() }}
+        <div class="button-container">
+            {{ form.submit() }}
+            <button type="button" class="upload-btn" id="uploadCsvBtn">Augšupielādēt CSV</button>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById("uploadCsvBtn").addEventListener("click", function() {
+            window.location.href = "{{ url_for('upload_csv') }}";
+        });
+    </script>
+
+    <div class="nav-links">
+        <a href="/memes">Apskatīt MEME galeriju</a>
+        <a href="/stats">Apskatīt statistiku</a>
+    </div>
+
+    <!-- ✅ MEME GALERIJAS SADAĻA -->
+  
+    <div class="gallery">
+        {% for meme in memes %}
+            <div class="meme-card">
+                <img src="{{ url_for('static', filename='uploads/' + meme.filename) }}" alt="Meme">
+                <p>Augšupielādēts: {{ meme.upload_date }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
